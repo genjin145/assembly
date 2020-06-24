@@ -1,0 +1,44 @@
+.section {
+  padding: 40px 0;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    h1 {
+      margin: 0;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__btn {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        fill: lightgray;
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .row .col:last-child {
+    border-bottom: 1px solid lightgrey;
+  }
+}

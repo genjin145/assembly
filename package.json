@@ -1,13 +1,9 @@
 {
-  "name": "test_build",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "gulp dev",
     "build": "gulp build",
     "watch": "gulp watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/gulp/bin/gulp.js"
   },
   "keywords": [],
@@ -32,10 +28,10 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
-    "popper": "^1.0.1",
+    "popper.js": "^1.16.1",
     "whatwg-fetch": "^3.0.0"
   }
 }

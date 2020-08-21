@@ -9,22 +9,17 @@ html(lang="ru")
     meta(name="description", content=description)
     title #{title}
     link(rel="icon", type="image/png" , href="img/favicon.png")
-    //- link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap-grid.min.css")
-    //- link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
     link(rel="stylesheet", href="css/style.css")
-    script(defer, src="js/script.js")
   body
     block header
       include ../blocks/header/header
 
-    block content
+    main
+      block content
 
     block footer
       include ../blocks/footer/footer
 
     block modal
-      include ../blocks/modal/modal
 
-    script(src="//code.jquery.com/jquery-3.2.1.slim.min.js")
-    //- script(src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js")
-    script(src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
+    block scripts

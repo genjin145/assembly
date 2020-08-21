@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const browserSync = require('browser-sync');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
@@ -14,7 +15,8 @@ function cssDev() {
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
     .pipe(postcss([ autoprefixer() ]))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(path.output + 'css'));
+    .pipe(gulp.dest(path.output + 'css'))
+    .pipe(browserSync.stream());
 }
 
 function cssBuild() {

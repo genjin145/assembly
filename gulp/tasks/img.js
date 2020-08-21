@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const browserSync = require('browser-sync');
 const svgSprite = require('gulp-svg-sprite');
 const imagemin = require('gulp-imagemin');
 
@@ -9,7 +10,8 @@ function imgDev() {
       path.input + 'img/**/*.*',
       '!' + path.input + 'img/svg/*.svg'
     ])
-    .pipe(gulp.dest(path.output + 'img'));
+    .pipe(gulp.dest(path.output + 'img'))
+    .pipe(browserSync.stream({once: true}));
 }
 
 function imgBuild() {
@@ -49,7 +51,8 @@ function svg() {
         }
       }
     }))
-    .pipe(gulp.dest(path.output + 'img/svg'));
+    .pipe(gulp.dest(path.output + 'img/svg'))
+    .pipe(browserSync.stream({once: true}));
 }
 
 exports.imgDev = imgDev;

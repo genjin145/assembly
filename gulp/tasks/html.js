@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const browserSync = require('browser-sync');
 const pug = require('gulp-pug'); 
 
 const path = require('../path');
@@ -8,7 +9,8 @@ function html() {
     .pipe(pug({
       pretty: true
     }))
-    .pipe(gulp.dest(path.output));
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.stream({once: true}));
 }
 
 exports.html = html;

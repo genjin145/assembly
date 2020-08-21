@@ -1,16 +1,23 @@
 const gulp = require('gulp');
+const browserSync = require('browser-sync');
 const webpack = require('webpack-stream');
+const pathSrc = require('path');
 
 const path = require('../path');
 
 function jsDev() {
-  return gulp.src(path.input + 'js/script.js')
+  return gulp.src(path.input + 'js/*.js')
     .pipe(webpack({
       mode: 'development',
       devtool: 'inline-source-map',
+      context: pathSrc.resolve(__dirname, '../../src/js/'),
+      entry: {
+        script: './script.js'
+      },
       output: {
-        filename: 'script.js'
-      },  
+        filename: '[name].js',
+        
+      },
       module: {
         rules: [
           {
@@ -23,15 +30,20 @@ function jsDev() {
         ]
       }
     }))
-    .pipe(gulp.dest(path.output + 'js'));
+    .pipe(gulp.dest(path.output + 'js'))
+    .pipe(browserSync.stream({once: true}));
 }
 
 function jsBuild() {
-  return gulp.src(path.input + 'js/script.js')
+  return gulp.src(path.input + 'js/*.js')
     .pipe(webpack({
       mode: 'production',
+      context: pathSrc.resolve(__dirname, '../../src/js/'),
+      entry: {
+        script: './script.js'
+      },
       output: {
-        filename: 'script.js'
+        filename: '[name].js'
       },
       module: {
         rules: [

@@ -1,30 +1,32 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import sourcemaps from 'gulp-sourcemaps';
+import postcss from 'gulp-postcss';
+import autoprefixer from 'autoprefixer';
 
-sass.compiler = require('node-sass');
+import path from '../path.js';
 
-const path = require('../path');
+const sass = gulpSass(dartSass);
 
 function cssDev() {
-  return gulp.src(path.input + 'sass/style.scss')
+  return gulp
+    .src(path.input + 'sass/style.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-    .pipe(postcss([ autoprefixer() ]))
+    .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+    .pipe(postcss([autoprefixer()]))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(path.output + 'css'))
     .pipe(browserSync.stream());
 }
 
 function cssBuild() {
-  return gulp.src(path.input + 'sass/style.scss')
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(postcss([ autoprefixer() ]))
+  return gulp
+    .src(path.input + 'sass/style.scss')
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(postcss([autoprefixer()]))
     .pipe(gulp.dest(path.output + 'css'));
 }
 
-exports.cssDev = cssDev;
-exports.cssBuild = cssBuild;
+export { cssDev, cssBuild };

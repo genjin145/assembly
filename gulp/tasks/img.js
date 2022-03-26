@@ -1,60 +1,70 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const svgSprite = require('gulp-svg-sprite');
-const imagemin = require('gulp-imagemin');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import svgSprite from 'gulp-svg-sprite';
+import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin';
 
-const path = require('../path');
+import path from '../path.js';
 
 function imgDev() {
-  return gulp.src([
-      path.input + 'img/**/*.*',
-      '!' + path.input + 'img/svg/*.svg'
+  return gulp
+    .src([
+      `${path.input}${path.imgFolder}**/*.*`,
+      `!${path.input}${path.imgFolder}sprite/*.svg`,
     ])
-    .pipe(gulp.dest(path.output + 'img'))
-    .pipe(browserSync.stream({once: true}));
+    .pipe(gulp.dest(path.output + path.imgFolder))
+    .pipe(browserSync.stream({ once: true }));
 }
 
 function imgBuild() {
-  return gulp.src([
-      path.input + 'img/**/*.*',
-      '!' + path.input + 'img/svg/*.svg'
+  return gulp
+    .src([
+      `${path.input}${path.imgFolder}**/*.*`,
+      `!${path.input}${path.imgFolder}sprite/*.svg`,
     ])
-    .pipe(imagemin([
-      imagemin.gifsicle({interlaced: true}),
-      imagemin.mozjpeg({quality: 85, progressive: true}),
-      imagemin.optipng({optimizationLevel: 5}),
-      imagemin.svgo({
-        plugins: [
-          {removeViewBox: true},
-          {cleanupIDs: false}
-        ]
-      })
-    ]))
-    .pipe(gulp.dest(path.output + 'img'));
+    .pipe(
+      imagemin(
+        [
+          gifsicle({ interlaced: true }),
+          mozjpeg({ quality: 85, progressive: true }),
+          optipng({ optimizationLevel: 5 }),
+          svgo({
+            plugins: [
+              { name: 'removeViewBox', active: true },
+              { name: 'cleanupIDs', active: false },
+            ],
+          }),
+        ],
+        { verbose: true }
+      )
+    )
+    .pipe(gulp.dest(path.output + path.imgFolder));
 }
 
-function svg() {
-  return gulp.src(path.input + 'img/svg/*.svg')
-    .pipe(imagemin([
-      imagemin.svgo({
-        plugins: [
-          {removeViewBox: true},
-          {cleanupIDs: false},
-          {removeAttrs: {attrs: '(stroke|fill)'}}
-        ]
+function sprite() {
+  return gulp
+    .src(`${path.input}${path.imgFolder}sprite/*.svg`)
+    .pipe(
+      imagemin([
+        svgo({
+          plugins: [
+            { name: 'removeViewBox', active: true },
+            { name: 'cleanupIDs', active: false },
+            { name: 'removeAttrs', params: { attrs: '(stroke|fill)' } },
+          ],
+        }),
+      ])
+    )
+    .pipe(
+      svgSprite({
+        mode: {
+          symbol: {
+            sprite: 'sprite.svg',
+          },
+        },
       })
-    ]))
-    .pipe(svgSprite({
-      mode: {
-        symbol: {
-          sprite: "sprite.svg"
-        }
-      }
-    }))
-    .pipe(gulp.dest(path.output + 'img/svg'))
-    .pipe(browserSync.stream({once: true}));
+    )
+    .pipe(gulp.dest(`${path.output}${path.imgFolder}sprite`))
+    .pipe(browserSync.stream({ once: true }));
 }
 
-exports.imgDev = imgDev;
-exports.imgBuild = imgBuild;
-exports.svg = svg;
+export { imgDev, imgBuild, sprite };

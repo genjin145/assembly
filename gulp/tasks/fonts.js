@@ -1,12 +1,13 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
 
-const path = require('../path');
+import path from '../path.js';
 
 function fonts() {
-  return gulp.src(path.input + 'fonts/**/*.*')
+  return gulp
+    .src(path.input + 'fonts/**/*.*')
     .pipe(gulp.dest(path.output + 'fonts'))
-    .pipe(browserSync.stream({once: true}));
+    .pipe(browserSync.stream({ once: true }));
 }
 
-exports.fonts = fonts;
+export { fonts };

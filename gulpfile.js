@@ -1,61 +1,41 @@
-const gulp = require('gulp');
+import gulp from 'gulp';
 
-const path = require('./gulp/path');
+import { clear } from './gulp/tasks/clear.js';
+import { htmlDev, htmlBuild } from './gulp/tasks/html.js';
+import { cssDev, cssBuild } from './gulp/tasks/css.js';
+import { jsDev, jsBuild } from './gulp/tasks/js.js';
+import { imgDev, imgBuild, sprite } from './gulp/tasks/img.js';
+import { fonts } from './gulp/tasks/fonts.js';
+import { assets } from './gulp/tasks/assets.js';
+import { serve } from './gulp/tasks/serve.js';
+import { watch } from './gulp/tasks/watch.js';
 
-const { clear } = require('./gulp/tasks/clear');
-const { html } = require('./gulp/tasks/html');
-const { cssDev, cssBuild } = require('./gulp/tasks/css');
-const { jsDev, jsBuild } = require('./gulp/tasks/js');
-const { imgDev, imgBuild, svg } = require('./gulp/tasks/img');
-const { fonts } = require('./gulp/tasks/fonts');
-const { serve } = require('./gulp/tasks/serve');
-const { watch } = require('./gulp/tasks/watch');
-
-function dev() {
-  return new Promise(gulp.series(
-    clear,
-    gulp.parallel(
-      html,
-      cssDev,
-      jsDev,
-      imgDev,
-      svg,
-      fonts
-    )
-  ));
-}
-
-function build() {
-  return new Promise(gulp.series(
-    clear,
-    gulp.parallel(
-      html,
-      cssBuild,
-      jsBuild,
-      imgBuild,
-      svg,
-      fonts
-    )
-  ));
-}
-
-exports.clear = clear;
-exports.html = html;
-exports.cssDev = cssDev;
-exports.cssBuild = cssBuild;
-exports.jsDev = jsDev;
-exports.jsBuild = jsBuild;
-exports.imgDev = imgDev;
-exports.imgBuild = imgBuild;
-exports.svg = svg;
-exports.fonts = fonts;
-exports.serve = serve;
-exports.watch = watch;
-
-exports.dev = dev;
-exports.build = build;
-
-exports.default = gulp.series(
-  dev,
-  gulp.parallel(serve, watch)
+const dev = gulp.series(
+  clear,
+  gulp.parallel(htmlDev, cssDev, jsDev, imgDev, sprite, fonts, assets)
 );
+
+const build = gulp.series(
+  clear,
+  gulp.parallel(htmlBuild, cssBuild, jsBuild, imgBuild, sprite, fonts, assets)
+);
+
+export {
+  dev,
+  build,
+  clear,
+  htmlBuild,
+  cssDev,
+  cssBuild,
+  jsDev,
+  jsBuild,
+  imgDev,
+  imgBuild,
+  sprite,
+  fonts,
+  assets,
+  serve,
+  watch,
+};
+
+export default gulp.series(dev, gulp.parallel(serve, watch));

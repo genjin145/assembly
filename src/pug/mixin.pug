@@ -1,10 +1,6 @@
 mixin icon(mod, name)
-  if(name)
-    svg(class=name + " icon icon_" + mod)
-      use(xlink:href="img/svg/symbol/sprite.svg#" + mod)
-  else
-    svg(class="icon icon_" + mod)
-      use(xlink:href="img/svg/symbol/sprite.svg#" + mod)
+  svg(class=[`icon icon_${mod}`, name].filter(Boolean).join(' '))
+    use(xlink:href="assets/img/sprite/symbol/sprite.svg#" + mod)
 
 mixin menu(className)
   if className
@@ -18,10 +14,6 @@ mixin menu(className)
 
   ul.main-menu(class=className)
     li.main-menu__item(class=item)
-      a.main-menu__link(class=link, href="#services") Main
+      a.main-menu__link(class=link, href="/") Main
     li.main-menu__item(class=item)
-      a.main-menu__link(class=link, href="#about") About us
-    li.main-menu__item(class=item)
-      a.main-menu__link(class=link, href="#mortgage") News
-    li.main-menu__item(class=item)
-      a.main-menu__link(class=link, href="#documents") Documents
+      a.main-menu__link(class=link, href="/info.html") Info

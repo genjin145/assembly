@@ -1,8 +1,10 @@
 .logo {
   font-size: 24px;
   color: yellowgreen;
-  
+  text-decoration: none;
+
   &:hover {
     color: yellowgreen;
+    opacity: 0.8;
   }
 }

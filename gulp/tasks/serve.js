@@ -1,13 +1,13 @@
-const browserSync = require('browser-sync');
+import browserSync from 'browser-sync';
 
-const path = require('../path');
+import path from '../path.js';
 
 function serve() {
   browserSync.init({
     server: {
-      baseDir: path.output
-    }
+      baseDir: path.output,
+    },
   });
 }
 
-exports.serve = serve;
+export { serve };

@@ -1,9 +1,9 @@
-const del = require('del');
+import del from 'del';
 
-const path = require('../path');
+import path from '../path.js';
 
 function clear() {
   return del(path.output);
 }
 
-exports.clear = clear;
+export { clear };

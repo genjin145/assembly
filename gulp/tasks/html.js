@@ -1,16 +1,23 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const pug = require('gulp-pug'); 
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import pug from 'gulp-pug';
 
-const path = require('../path');
+import path from '../path.js';
 
-function html() {
-  return gulp.src(path.input + 'pug/pages/*.pug')
-    .pipe(pug({
-      pretty: true
-    }))
+function htmlDev() {
+  return gulp
+    .src(path.input + 'pages/*.pug')
+    .pipe(pug({ pretty: true }))
     .pipe(gulp.dest(path.output))
-    .pipe(browserSync.stream({once: true}));
+    .pipe(browserSync.stream({ once: true }));
 }
 
-exports.html = html;
+function htmlBuild() {
+  return gulp
+    .src(path.input + 'pages/*.pug')
+    .pipe(pug())
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.stream({ once: true }));
+}
+
+export { htmlDev, htmlBuild };
